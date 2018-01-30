@@ -4,14 +4,14 @@ const io = require('socket.io').listen(3400).sockets;
 
 
 //connection to mongo
-mongo.connect('mongodb://localhost/mongo_chat', (err, db) => {
+mongo.connect('mongodb://localhost/mongochat', (err, db) => {
   if (err) {
-    console.log(err);
+    throw err;
   }
   console.log('connection ongoing~');
 
   //socket.io
-  io.on('connection', () => {
+  io.on('connection', (socket) => {
     let chat = db.collection('chats');
 
 
