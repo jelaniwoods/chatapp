@@ -4,19 +4,19 @@ const io = require('socket.io').listen(3400).sockets;
 
 
 //connection to mongo
-mongo.connect('mongodb://localhost/mongochat', (err, db) => {
+mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db) {
   if (err) {
     throw err;
   }
   console.log('connection ongoing~');
 
   //socket.io
-  io.on('connection', (socket) => {
+  io.on('connection', function(socket) {
     let chat = db.collection('chats');
 
 
     // create function to send status
-    sendStatus = (s) => {
+    sendStatus = function(s) {
       socket.emit('status', s);
     }
 
@@ -32,17 +32,17 @@ mongo.connect('mongodb://localhost/mongochat', (err, db) => {
     });
 
 
-    socket.on('input', (data) => {
+    socket.on('input', function(data) {
       let name = data.name;
       let message = data.message;
-
+      console.log(name + " ~ " + message);
       // check for name and message
       if (name === '' || message === '') {
         sendStatus('please enter name and message');
       }
       else {
         // add to db
-        chat.insert({name: name, message: message}, () => {
+        chat.insert({name: name, message: message}, function() {
           io.emit('output', [data]);
 
           sendStatus({
