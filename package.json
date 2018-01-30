@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/jmw686/chatapp#readme",
   "dependencies": {
-    "mongodb": "^3.0.2",
+    "mongodb": "^2.2.30",
     "socket.io": "^2.0.4"
   }
 }
